@@ -7,11 +7,13 @@ router.get('/', async (req, res) => {
   try {
     // Find all tags and include their associated products
     const tags = await Tag.findAll({
-      include: {
-        model: Product,
-        through: ProductTag, // Tags are associated with products through the ProductTag model
-        as: 'products' // This alias will be used to refer to the associated products
-      }
+      include: [
+        {
+          model: Product,
+          through: ProductTag, // Tags are associated with products through the ProductTag model
+          as: 'products' // This alias will be used to refer to the associated products
+        }
+      ]
     });
     
     res.status(200).json(tags);
@@ -25,11 +27,13 @@ router.get('/:id', async (req, res) => {
   try {
     // Find a single tag by its id and include its associated products
     const tag = await Tag.findByPk(req.params.id, {
-      include: {
-        model: Product,
-        through: ProductTag, // Tags are associated with products through the ProductTag model
-        as: 'products' // This alias will be used to refer to the associated products
-      }
+      include: [
+        {
+          model: Product,
+          through: ProductTag, // Tags are associated with products through the ProductTag model
+          as: 'products' // This alias will be used to refer to the associated products
+        }
+      ]
     });
     
     // If the tag is not found, return 404
